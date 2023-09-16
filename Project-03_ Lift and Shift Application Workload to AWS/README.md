@@ -40,7 +40,7 @@
 ```sh
 Name: vprofile-db01
 Project: vprofile
-AMI: Centos 7
+AMI: Centos 9
 InstanceType: t2.micro
 SecGrp: vprofile-backend-SG
 UserData: mysql.sh
@@ -60,7 +60,7 @@ systemctl status mariadb
 ```sh
 Name: vprofile-mc01
 Project: vprofile
-AMI: Centos 7
+AMI: Centos 9
 InstanceType: t2.micro
 SecGrp: vprofile-backend-SG
 UserData: memcache.sh
@@ -81,7 +81,7 @@ ss -tunpl | grep 11211
 ```sh
 Name: vprofile-rmq01
 Project: vprofile
-AMI: Centos 7
+AMI: Centos 9
 InstanceType: t2.micro
 SecGrp: vprofile-backend-SG
 UserData: rabbitmq.sh
@@ -122,7 +122,7 @@ Value/Route traffic to: IP address or another value
 ```sh
 Name: vprofile-app01
 Project: vprofile
-AMI: Ubuntu 18.04
+AMI: Ubuntu 22.04
 InstanceType: t2.micro
 SecGrp: vprofile-app-SG
 UserData: tomcat_ubuntu.sh
@@ -197,13 +197,13 @@ Policy: s3FullAccess
 ```sh
 ssh -i "vprofile-prod-key.pem" ubuntu@<public_ip_of_server>
 sudo su -
-systemctl status tomcat8
+systemctl status tomcat9
 ```
 
 - We will delete `ROOT` (where default tomcat app files stored) directory under `/var/lib/tomcat8/webapps/`. Before deleting it we need to stop Tomcat server. 
 ```sh
 cd /var/lib/tomcat8/webapps/
-systemctl stop tomcat8
+systemctl stop tomcat9
 rm -rf ROOT
 ```
 - Next we will download our artifact from s3 using aws cli commands. First we need to install `aws cli`. We will initially download our artifact to `/tmp` directory, then we will copy it under `/var/lib/tomcat8/webapps/` directory as `ROOT.war`. Since this is the default app directory, Tomcat will extract the compressed file.
@@ -213,7 +213,7 @@ aws s3 ls s3://vprofile-artifact-storage-rd
 aws s3 cp s3://vprofile-artifact-storage-rd/vprofile-v2.war /tmp/vprofile-v2.war
 cd /tmp
 cp vprofile-v2.war /var/lib/tomcat8/webapps/ROOT.war
-systemctl start tomcat8
+systemctl start tomcat9
 ```
 
 - We can also verify `application.properties` file has the latest changes.
