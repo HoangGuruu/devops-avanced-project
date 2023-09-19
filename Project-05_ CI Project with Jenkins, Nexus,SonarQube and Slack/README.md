@@ -1,6 +1,6 @@
 # Project-5: Continuous Integration Using jenkins, Nexus, Sonarqube and Slack
 
-[*Project Source*](https://www.udemy.com/course/devopsprojects/?src=sac&kw=devops+projects)
+[*Project Source*](https://github.com/devopshydclub/vprofile-project)
 
 ## Pre-requisities:
 
@@ -345,7 +345,12 @@ Member repositories:
 ### Step-5: Create a repository in Github
 
 - We need to create a private repository in the Github to be used with this project. 
+- Creat SSH key then copy id_rsa.pub in github ssh key
 
+- Then 
+```
+ssh -T git@github.com
+```
 - The content will be cloned from below link:
 ```sh
 git clone -b ci-jenkins git@github.com:rumeysakdogan/vprofileproject-all.git

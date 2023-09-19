@@ -202,7 +202,7 @@ EC2 key pair: vprofile-bean-key
 ```
 
 ### Step-5: Update Backend SecGrp & ELB
-
+- Enable amazon S3 BeanStalk
 - Our application instances created by BeanStalk will communicate with Backend services. We need update `vprofile-backend-SG` to allow connection from our appSecGrp created by Beanstalk on port `3306`, `11211` and `5671` 
 ```sh
 Custom TCP 3306 from Beanstalk SecGrp(you can find id from EC2 insatnces)
@@ -260,6 +260,7 @@ mvn install
 ### Step-8: Create Cloudfront Distribution for CDN
 
 - Cloudfront is Content Delivery Nettwork service of AWS. It uses Edge Locations around the world to deliver contents globally with best performance. We will to `CloudFront` and create a distribution.
+
 ```sh
 Origin Domain: DNS record name we created for our app in previous step
 Viewer protocol: Redirect HTTP to HTTPS
@@ -271,6 +272,7 @@ Security policy: TLSv1
 
 ![](images/app-distributed-from-cdn.png)
 
-### Step-9: Clean-up
+### Step-9: Validate and Clean-up
+- Use F12 to check when restart login web
 
 - We will delete all resources that we have created throughout the project.
