@@ -51,6 +51,9 @@ ssh -i vprofile-prod-key.pem centos@<public_ip_of_instance>
 sudo su -
 curl http://169.254.169.254/latest/user-data
 systemctl status mariadb
+mysql -u admin -padmin123 accounts
+show tables
+quit
 ```
 ![](images/mariadb-running.png)
 
