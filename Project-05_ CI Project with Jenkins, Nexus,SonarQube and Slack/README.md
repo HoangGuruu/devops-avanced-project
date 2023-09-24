@@ -378,6 +378,8 @@ ls /usr/lib/jvm
 ### we should get both jdk-11 and jdk-8 in this path ###
 java-1.11.0-openjdk-amd64  java-11-openjdk-amd64  openjdk-11
 java-1.8.0-openjdk-amd64   java-8-openjdk-amd64
+
+JAVA_HOME : /usr/lib/jvm/java-1.8.0-openjdk-amd64
 ``` 
 
 - Next we will setup our Maven.

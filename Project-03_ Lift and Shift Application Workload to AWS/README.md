@@ -203,9 +203,9 @@ sudo su -
 systemctl status tomcat9
 ```
 
-- We will delete `ROOT` (where default tomcat app files stored) directory under `/var/lib/tomcat8/webapps/`. Before deleting it we need to stop Tomcat server. 
+- We will delete `ROOT` (where default tomcat app files stored) directory under `/var/lib/tomcat9/webapps/`. Before deleting it we need to stop Tomcat server. 
 ```sh
-cd /var/lib/tomcat8/webapps/
+cd /var/lib/tomcat9/webapps/
 systemctl stop tomcat9
 rm -rf ROOT
 ```
