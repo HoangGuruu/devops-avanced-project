@@ -50,6 +50,11 @@
 	+ Name : vprofile-app01, Project : vprofile , SG : vprofile-app-SG, user data : tomcat_ubuntu.sh
 - Check everything
 ```
+# Checking 
+sudo cat  /var/log/cloud-init-output.log 
+
+```
+```
 # vprofile-db01
 mysql -u admin -padmin123 accounts
 show tables

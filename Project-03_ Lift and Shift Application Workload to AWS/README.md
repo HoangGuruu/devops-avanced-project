@@ -52,7 +52,7 @@ sudo su -
 curl http://169.254.169.254/latest/user-data
 systemctl status mariadb
 mysql -u admin -padmin123 accounts
-show tables
+show tables;
 quit
 ```
 ![](images/mariadb-running.png)
@@ -93,7 +93,13 @@ UserData: rabbitmq.sh
 ```sh
 ssh -i vprofile-prod-key.pem centos@<public_ip_of_instance>
 sudo su -
+
 curl http://169.254.169.254/latest/user-data
+
+TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+&& curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/user-data
+1234,john,reboot,true | 4512,richard, | 173,,,
+
 systemctl status rabbitmq-server
 ```
 ![](images/rabbitmq-running.png)
@@ -186,6 +192,11 @@ aws s3 ls vprofile-artifact-storage-rd
 - We can verify the same from AWS Console.
 ![](images/s3-created.png)
 
+```
+# Checking 
+sudo cat  /var/log/cloud-init-output.log 
+
+```
 ### Step-7: Download Artifact to Tomcat server from S3
 
 - In order to download our artifact onto Tomcat server, we need to create IAM role for Tomcat. Once role is created we will attach it to our `app01` server.
