@@ -86,3 +86,22 @@ bin/kafka-topics.sh --create --topic ed-topic-1 --bootstrap-server localhost{cha
 ```
 
 ## 005 MySQL Setup
+- Create database in RDS
+```
+MySQL 5.7.37
+Multi-AZ DB
+
+ed-rds-01
+
+admin
+Master password : 123456a
+
+Burstable classes : db.t3.micro
+General supore SSD
+VPC 
+no : PUBLIC
+
+VPC : default
+
+VPC : enable DNS resolution , hostnames
+```
