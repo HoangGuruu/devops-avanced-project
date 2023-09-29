@@ -139,6 +139,7 @@ UserData: tomcat_ubuntu.sh
 
 ### Step-5: Create Artifact Locally with MAVEN
 
+- Do it in local machine visual code 
 - Clone the repository.
 ```sh
 git clone https://github.com/rumeysakdogan/vprofile-project.git
@@ -156,6 +157,8 @@ rabbitmq.address=rmq01.vprofile.in
 
 ```sh
 mvn install
+
+mvn clean install -DskipTests
 ```
 ![](images/mvn-build-success.png)
 ![](images/artifact-created.png)
@@ -182,12 +185,12 @@ format: json
 ```
 - Create bucket. Note: S3 buckets are global so the naming must be UNIQUE!
 ```sh
-aws s3 mb s3://vprofile-artifact-storage-rd 
+aws s3 mb s3://vprofile-artifact-storage-rd-guru
 ```
 - Go to target directory and copy the artifact to bucket with below command. Then verify by listing objects in the bucket.
 ```sh
-aws s3 cp vprofile-v2.war s3://vprofile-artifact-storage-rd
-aws s3 ls vprofile-artifact-storage-rd
+aws s3 cp vprofile-v2.war s3://vprofile-artifact-storage-rd-guru
+aws s3 ls vprofile-artifact-storage-rd-guru
 ```
 - We can verify the same from AWS Console.
 ![](images/s3-created.png)
@@ -207,7 +210,7 @@ Policy: s3FullAccess
 ```
 - Before we login to our server, we need to add SSH access on port 22 to our `vprofile-app-SG`.
 
-- Then connect to `app011` Ubuntu server.
+- Then connect to `app01` Ubuntu server.
 ```sh
 ssh -i "vprofile-prod-key.pem" ubuntu@<public_ip_of_server>
 sudo su -
@@ -220,19 +223,19 @@ cd /var/lib/tomcat9/webapps/
 systemctl stop tomcat9
 rm -rf ROOT
 ```
-- Next we will download our artifact from s3 using aws cli commands. First we need to install `aws cli`. We will initially download our artifact to `/tmp` directory, then we will copy it under `/var/lib/tomcat8/webapps/` directory as `ROOT.war`. Since this is the default app directory, Tomcat will extract the compressed file.
+- Next we will download our artifact from s3 using aws cli commands. First we need to install `aws cli`. We will initially download our artifact to `/tmp` directory, then we will copy it under `/var/lib/tomcat9/webapps/` directory as `ROOT.war`. Since this is the default app directory, Tomcat will extract the compressed file.
 ```sh
 apt install awscli -y
-aws s3 ls s3://vprofile-artifact-storage-rd
-aws s3 cp s3://vprofile-artifact-storage-rd/vprofile-v2.war /tmp/vprofile-v2.war
+aws s3 ls s3://vprofile-artifact-storage-rd-guru
+aws s3 cp s3://vprofile-artifact-storage-rd-guru/vprofile-v2.war /tmp/vprofile-v2.war
 cd /tmp
-cp vprofile-v2.war /var/lib/tomcat8/webapps/ROOT.war
+cp vprofile-v2.war /var/lib/tomcat9/webapps/ROOT.war
 systemctl start tomcat9
 ```
 
 - We can also verify `application.properties` file has the latest changes.
 ```sh
-cat /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties
+cat /var/lib/tomcat9/webapps/ROOT/WEB-INF/classes/application.properties
 ```
 
 - We can validate network connectivity from server using `telnet`.
@@ -260,7 +263,7 @@ available instance: app01 (Include as pending below)
 vprofile-prod-elb
 Internet Facing
 Select all AZs
-SecGrp: vprofile-elb-secGrp
+SecGrp: vprofile-ELB-SG
 Listeners: HTTP, HTTPS
 Select the certificate for HTTPS
 ```
